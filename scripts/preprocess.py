@@ -1,5 +1,16 @@
 import re
+from etnltk.lang.am import normalize
+from etnltk.lang.am.stop_words import STOP_WORDS
+from etnltk.lang.am.preprocessing import remove_punct
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
 def remove_emojis(data:str):
+    data = re.sub(r'http\S+', '', data)
+    # Remove usernames and hashtags
+    data = re.sub(r'@[A-Za-z0-9_]+', '', data)
+    data = re.sub(r'#[A-Za-z0-9_]+', '', data)
     emoj = re.compile("["
         u"\U0001F600-\U0001F64F"  # emoticons
         u"\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -37,3 +48,30 @@ def process_text(data:str):
     data = replace_tabs_with_space(data)
     data = remove_newline(data)
     return remove_spacing_dots(data)
+
+
+def is_amharic(word:str):
+    return any('\u1200' <= char <= '\u137f' for char in word)
+
+def process_language(text:str):
+    try:
+        tokens = word_tokenize(text)
+        processed_tokens = []
+        stemmer = PorterStemmer()
+        for token in tokens:
+            remove_punct(token)
+            if(is_amharic(token)):
+                am_normalized_token = normalize(token)
+                if am_normalized_token not in STOP_WORDS:
+                    processed_tokens.append(am_normalized_token)
+            else:
+                stop_words = set(stopwords.words('english'))
+                token = token.lower()
+                en_token = stemmer.stem(token)
+                if token is not stop_words:
+                    processed_tokens.append(token)
+        print(processed_tokens)
+        return ' '.join(processed_tokens)
+    except Exception as e:
+        print(f"{e}")
+            
