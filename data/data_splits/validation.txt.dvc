@@ -1,0 +1,5 @@
+outs:
+- md5: 84184c2d7487c10f80a17572cbece259
+  size: 2200
+  hash: md5
+  path: validation.txt

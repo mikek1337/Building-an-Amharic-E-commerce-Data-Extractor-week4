@@ -1,0 +1,5 @@
+outs:
+- md5: 16bb70b8a3ceacf88eb21b0dc217e3b6
+  size: 20256
+  hash: md5
+  path: labeled_data.txt

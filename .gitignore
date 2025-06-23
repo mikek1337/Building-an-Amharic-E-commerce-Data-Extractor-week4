@@ -1,5 +1,6 @@
-data/
 __pycache__
 .venv
+client_secret_251973518187-h12ior3damtpoh76qnjt6uahjsa1c1ig.apps.googleusercontent.com.json
 .env
 channel_scraper.session
+dvcstorage-auth.json
