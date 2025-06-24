@@ -74,6 +74,48 @@ To scrape messages from the listed channels and save them to `data/messages.csv`
 python scripts/scrapy.py
 ```
 
+## DVC Setup with Google Drive
+
+To version and share your data and models, this project uses [DVC](https://dvc.org/) with Google Drive as remote storage.
+
+### Steps:
+
+1. **Install DVC with Google Drive support:**
+    ```sh
+    pip install dvc[gdrive]
+    ```
+
+2. **Initialize DVC in your project (if not already done):**
+    ```sh
+    dvc init
+    ```
+
+3. **Add your data files to DVC tracking:**
+    ```sh
+    dvc add ../data/messages.csv
+    dvc add ../data/cleaned_messages.csv
+    dvc add ../data/message_tokens.txt
+    ```
+
+4. **Configure Google Drive as a remote:**
+    ```sh
+    dvc remote add -d gdrive_remote gdrive://1ExRdlctDJAd7ajYCv0DnbxWODZVeaybf 
+    ```
+
+5. **Push your data to Google Drive:**
+    ```sh
+    dvc push
+    ```
+
+6. **To pull data on another machine:**
+    ```sh
+    dvc pull
+    ```
+
+> **Note:**  
+> The first time you push or pull, DVC will prompt you to authenticate with Google Drive.
+
+
 This will:
 - Connect to Telegram using your credentials.
 - Fetch messages from each channel in `channels.txt`.
