@@ -32,9 +32,10 @@ async def get_messages( channel_name:str, limit:int=100):
             'date': message.date,
             'sender_id': message.sender_id,
             'message': message.message,
+            'views': message.views,
             'channel_name': channel_name
         });
-    print(messages)
+    print(message)
     return messages
 async def save_content( channel_names:list[str], limit:int=100):
     content = []
